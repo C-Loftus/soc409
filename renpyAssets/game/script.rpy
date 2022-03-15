@@ -3,6 +3,10 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
+init python:
+    import requests
+    
+
 define e = Character("Eileen")
 
 
