@@ -6,7 +6,7 @@ if you are using vscode and get errors from pylance or another conflicting exten
 and configure file associations for .rpy to renpy.
 
 ## Editing
-edits should be in the [main script file](game_project/game/script.rpy)
+script root should be in `renpyAssets/game/script.rpy`. from there you can link to other scripts
 
 ## Deploying 
 ```
