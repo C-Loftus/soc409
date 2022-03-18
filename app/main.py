@@ -1,10 +1,11 @@
-import os
+import os, flask
 from datetime import datetime
+
 from flask import Flask, render_template, request, redirect
-import flask
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-from utils import allowed_image, allowed_image_filesize
+
+from . import utils
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
@@ -44,11 +45,11 @@ def newPost():
             image = request.files["image"]
             
             if "filesize" in request.cookies:
-                if not allowed_image_filesize(app, request.cookies["filesize"]):
+                if not utils.allowed_image_filesize(app, request.cookies["filesize"]):
                     print("Filesize exceeded maximum limit")
                     return redirect(request.url)
 
-            if allowed_image(image.filename):
+            if utils.allowed_image(image.filename):
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
                 image_link = filename
