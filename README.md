@@ -16,3 +16,11 @@ $ git commit -am "make it better"
 $ git push heroku master
 ```
 You must have the Heroku cli  installed to do that.
+
+## Testing locally
+```
+# install dependencies
+pipenv install 
+# run from project root (you can also do pipenv run python3 wsgi.py)
+pipenv run flask run
+```
