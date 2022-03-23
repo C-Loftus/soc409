@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Search all posts </title>
+{% endblock %}
+
+{% block body %}   
+  <h1> Search for a specific keyword </h1>
+    <hr>
+    <form action='/search' method='POST', enctype="multipart/form-data">
+    
+        Type your input here: <input class="form-control" type="userInput" name='userInput' id='userInput'
+         placeholder="i.e. 'Oak Tree'" aria-label="Enter the description of the plant">    
+          <br>
+        <input type='submit' value='Post'>
+    </form>
+    <hr>
+    <h4> Note: searches are displayed in order of the relevance with the keyword. If you wish to view a 
+        specific post individually, please input its id number.
+    </h4>
+{% endblock %}

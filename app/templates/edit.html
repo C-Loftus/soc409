@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Edit Post </title>
+{% endblock %}
+
+
+
+
+{% block body %}   
+  <h1>Edit Post </h1>
+    <hr>
+    <h2> Edit </h2>
+    <form action='/allposts/edit/{{post.id}}' method='POST'>
+        <!-- Title: <input type='text' name='title' id='title' value={{post.title}}>
+        <br>
+        Description: <input type='text' name='description' id='description' value={{post.description}}>
+        <br> -->
+        Title: <input class="form-control" type="text" name='title' id='title' placeholder="Edit Title" aria-label="Edit Title">
+        <br>
+        Plant Name : <input class="form-control" type="plantName" name='plantName' id='plantName' placeholder="Edit Plant Name" aria-label="Edit Plant Name">
+        <br>
+        Location: <input class="form-control" type="location" name='location' id='location' placeholder="Edit the Location of the Plant" aria-label="Edit the location of the plant">    
+        <br>
+        Description: <input class="form-control" type="description" name='description' id='description' placeholder="Edit the Description of the Plant" aria-label="Edit the description of the plant">    
+        <br>
+        <input type='submit' value='Save'>
+    </form>
+    <hr>
+
+{% endblock %}

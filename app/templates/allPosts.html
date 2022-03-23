@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Posts </title>
+<style>
+h3,h4,h5, .actions{
+    display: inline;
+    padding-right: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}   
+<br>
+<H3>Here are the most recent posts!</H3>
+<hr>
+    {% for post in posts %} 
+
+        {% if post.title %}
+        <h3> {{post.title }}</h3>
+        {% else %}
+            <h3> Post Number {{ post.id}} </h3>
+        {% endif %}
+
+        {% if post.plantName %}
+            <h5> Species : {{post.plantName }}</h5>
+        {% else %}
+            <h5> Unspecified Species </h5>
+        {% endif %}
+
+        {% if post.author %}
+            <h5> By : {{post.author }}</h5>
+            {% else %}
+            <h5> Anonymous </h5>
+        {% endif %}
+        {% if post.location %}
+            <h5> Found near {{post.location}}</h5>
+        {% else %}
+            <h5> Location not specified </h5>
+        {% endif %}
+        {% if post.imageLink %}
+        <div>
+            <br>
+            <br>
+            <img src=static/assets/images/{{post.imageLink}} class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}">
+        </div>
+        {% else %}
+            <h5> No image attatched. </h5>
+        {% endif %}
+        {% if post.description %}
+        <br>
+        <br>       
+        <h3>{{post.description}}</h3>
+        <br>
+        {% endif %}
+        <br>
+        <div class="actions">
+            <a href="/allposts/edit/{{post.id}}" class="btn btn-warning" role="button">Edit</a>
+            <a href="/allposts/delete/{{post.id}}" class="btn btn-danger" role="button">Delete</a>
+            <button class="btn btn-block btn-primary"><i class="fa fa-thumbs-up">Like</i> </button>
+        </div>
+
+        <hr>
+    {% endfor %}
+
+{% endblock %}
