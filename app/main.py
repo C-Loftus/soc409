@@ -70,6 +70,11 @@ def allPosts():
     all_posts = Post.query.order_by(Post.date_posted).all()
     return render_template('allPosts.html', posts=all_posts)
 
+@app.route('/maps', methods=['GET'])
+def maps():
+    all_posts = Post.query.order_by(Post.date_posted).all()
+    return render_template('maps.html', posts=all_posts)
+
 @app.route("/")
 def index():
     return flask.render_template('index.html')
