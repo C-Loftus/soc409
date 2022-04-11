@@ -10,6 +10,7 @@ from .utils import files
 ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 db = SQLAlchemy(app)
+maps_api_key = os.environ.get('MAPS')
 
 app.config["IMAGE_UPLOADS"] = ROOT + "/static/assets/images"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -73,7 +74,7 @@ def allPosts():
 @app.route('/maps', methods=['GET'])
 def maps():
     all_posts = Post.query.order_by(Post.date_posted).all()
-    return render_template('maps.html', posts=all_posts)
+    return render_template('maps.html', posts=all_posts, api=maps_api_key)
 
 @app.route("/")
 def index():
