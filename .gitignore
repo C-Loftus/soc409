@@ -1,3 +1,5 @@
 __pycache__
-app/static/assets/images/*
+app/static/assets/images/*.png
+app/static/assets/images/*.jpg
+app/static/assets/images/*.jpeg
 secrets
