@@ -28,11 +28,6 @@ h3,h4,h5, .actions{
             <h5> Unspecified Species </h5>
         {% endif %}
 
-        {% if post.author %}
-            <h5> By : {{post.author }}</h5>
-            {% else %}
-            <h5> Anonymous </h5>
-        {% endif %}
         {% if post.location %}
             <h5> Found near {{post.location}}</h5>
         {% else %}

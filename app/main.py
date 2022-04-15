@@ -11,6 +11,8 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 db = SQLAlchemy(app)
 maps_api_key = os.environ.get('MAPS')
+# debug mode on
+app.debug = True
 
 app.config["IMAGE_UPLOADS"] = ROOT + "/static/assets/images"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -29,6 +31,8 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=True, default=("Post number" + id))
     description = db.Column(db.Text, nullable=True, default="No Description Provided")
     author = db.Column(db.String(30), nullable=True, default='Anonymous')
+    location = db.Column(db.String(30), nullable=True, default='No Location Given')
+    
     date_posted = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
 
     def __repr__(self):
@@ -40,7 +44,8 @@ def commitPost(request, image_link=""):
     post_title =      request.form.get('title', False)
     post_content =    request.form.get('description', False)
     post_author = request.form.get('author', False)
-    new_post = Post(title=post_title, description=post_content, plantName=plant_Name, imageLink=image_link, author=post_author)
+    location = request.form.get('location', False)
+    new_post = Post(title=post_title, description=post_content, plantName=plant_Name, imageLink=image_link, location=location, author=post_author)
     db.session.add(new_post)
     db.session.commit()
 
@@ -69,11 +74,13 @@ def newPost():
 @app.route('/allposts', methods=['GET'])
 def allPosts():
     all_posts = Post.query.order_by(Post.date_posted).all()
+    print("All posts = ", *all_posts)
     return render_template('allPosts.html', posts=all_posts)
 
 @app.route('/maps', methods=['GET'])
 def maps():
     all_posts = Post.query.order_by(Post.date_posted).all()
+    print("All posts = ", *all_posts)
     return render_template('maps.html', posts=all_posts, api=maps_api_key)
 
 @app.route("/")
