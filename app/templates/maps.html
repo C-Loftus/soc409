@@ -3,13 +3,6 @@
 {% block head %}
 <title>Marker Labels</title>
 
-<!-- map height 50% -->
-<style>
-    #map {
-        height: 50%;
-    }
-</style>
-
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script>
   // In the following example, markers appear when the user clicks on the map.
@@ -51,11 +44,12 @@
 <hr>
 <hr>
 
-<div id="map"></div>
+<div id="map" style="height: 700px;"></div>
 
 {% set my_string = "https://maps.googleapis.com/maps/api/js?key=" ~ api ~ "&callback=initMap&v=weekly"  %}
 
 <script src="{{ my_string }}"> async </script>
+<br>
 <h5> Click on the map to add a marker. </h5>
 <hr>
 <h5> Here are all the posts listed. Take a look at them on the map!
