@@ -86,3 +86,10 @@ def maps():
 @app.route("/")
 def index():
     return flask.render_template('index.html')
+
+@app.route('/allposts/delete/<int:id>')
+def delete(id):
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect('/allposts')
