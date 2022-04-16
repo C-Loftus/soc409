@@ -21,7 +21,9 @@ app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 
 @app.before_first_request
 def create_tables():
-    db.create_all()
+    hosted_local = maps_api_key is None
+    if hosted_local or app.debug:
+        db.create_all()
 
 
 class Post(db.Model):
