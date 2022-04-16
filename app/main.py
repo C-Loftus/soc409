@@ -33,7 +33,7 @@ class Post(db.Model):
     author = db.Column(db.String(30), nullable=True, default='Anonymous')
     location = db.Column(db.String(30), nullable=True, default='No Location Given')
     
-    date_posted = db.Column(db.DateTime, nullable=True, default=datetime.utcnow)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return 'Post ' + str(self.id)
