@@ -25,7 +25,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # if maps_api_key is not None:
 app.config['SQLALCHEMY_DATABASE_URI'] = str(os.environ.get('URI'))
- 
+print(app.config['SQLALCHEMY_DATABASE_URI'])
 
 
 @app.before_first_request
