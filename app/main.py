@@ -23,8 +23,9 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-if maps_api_key is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = str(os.environ.get('URI'))
+# if maps_api_key is not None:
+app.config['SQLALCHEMY_DATABASE_URI'] = str(os.environ.get('URI'))
+ 
 
 
 @app.before_first_request
@@ -38,8 +39,8 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=True, default=("Post number" + id))
     description = db.Column(db.Text, nullable=True, default="No Description Provided")
     location = db.Column(db.String(30), nullable=True, default='No Location Given')
-    image = db.Column(db.Text, unique=True, nullable=False)
-    mimetype = None
+    image = db.Column(db.Text, nullable=False)
+    mimetype = db.Column(db.String(30), nullable=True, default="Unknown Image")
 
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
