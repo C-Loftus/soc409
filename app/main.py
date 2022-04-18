@@ -1,8 +1,8 @@
+import mimetypes
 import os, flask
-import re
+import re, base64
 from datetime import datetime
-
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Response
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
@@ -23,9 +23,8 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-ENV = 'dev'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = str(os.environ.get('URI'))
+if maps_api_key is not None:
+    app.config['SQLALCHEMY_DATABASE_URI'] = str(os.environ.get('URI'))
 
 
 @app.before_first_request
@@ -35,14 +34,12 @@ def create_tables():
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    imageLink = db.Column(db.String(50), nullable=True, default="No Provided Image")
     plantName = db.Column(db.String(30), nullable=True, default="Unknown Plant")
     title = db.Column(db.String(100), nullable=True, default=("Post number" + id))
     description = db.Column(db.Text, nullable=True, default="No Description Provided")
-    author = db.Column(db.String(30), nullable=True, default='Anonymous')
     location = db.Column(db.String(30), nullable=True, default='No Location Given')
-    
-    image=db.Column(db.LargeBinary)
+    image = db.Column(db.Text, unique=True, nullable=False)
+    mimetype = None
 
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -54,10 +51,19 @@ def commitPost(request, image):
     plant_Name =      request.form.get('plantName', False)
     post_title =      request.form.get('title', False)
     post_content =    request.form.get('description', False)
-    post_author = request.form.get('author', False)
     location = request.form.get('location', False)
+    mimetype = image.mimetype
+    print(mimetype)
+    image = image.read()
 
-    new_post = Post(title=post_title, description=post_content, plantName=plant_Name, location=location, author=post_author, image=image)
+    new_post = (
+    Post(title=post_title, 
+     description=post_content, 
+     plantName=plant_Name, 
+     location=location, 
+     image=base64.b64encode(image).decode('utf-8'),
+     mimetype=mimetype)
+    )
     db.session.add(new_post)
     db.session.commit()
 
@@ -67,16 +73,17 @@ def newPost():
         if request.files:
             image = request.files["image"]
             
-            if "filesize" in request.cookies:
-                if not files.allowed_image_filesize(app, request.cookies["filesize"]):
-                    print("Filesize exceeded maximum limit")
-                    return redirect(request.url)
+            # if "filesize" in request.cookies:
+            #     if not files.allowed_image_filesize(app, request.cookies["filesize"]):
+            #         print("Filesize exceeded maximum limit")
+            #         return redirect(request.url)
 
-            if files.allowed_image(app, image.filename):
-                # image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-                image_link = image.filename
+            # if files.allowed_image(app, image.filename):
+            #     # image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+            #     image_link = image.filename
 
-        commitPost(request, image)
+            commitPost(request, image)
+
         return redirect('/allposts')
     elif request.method == 'GET':
         all_posts = Post.query.order_by(Post.date_posted).all()
@@ -88,7 +95,6 @@ def allPosts():
     # all_posts = Post.query.order_by(Post.date_posted).all()
     all_posts = db.session.query(Post).all()
 
-    print("All posts = ", *all_posts)
     return render_template('allPosts.html', posts=all_posts)
 
 @app.route('/maps', methods=['GET'])

@@ -39,7 +39,8 @@ h3,h4,h5, .actions{
             <br>
             <br>
             <!-- <img src="static/assets/images/{{post.imageLink}}" class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}"> -->
-            <img src="{{post.imageLink}}" class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}">
+            
+            <img src="data:{{post.mimetype}};base64,{{post.image}}" class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}">
 
         </div>
 
