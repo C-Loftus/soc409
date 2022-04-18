@@ -5,27 +5,32 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
+
 from .utils import files
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 db = SQLAlchemy(app)
 maps_api_key = os.environ.get('MAPS')
+
+
 # debug mode on
 app.debug = True
 
 app.config["IMAGE_UPLOADS"] = ROOT + "/static/assets/images"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+ENV = 'dev'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = str(os.environ.get('URI'))
 
 
 @app.before_first_request
 def create_tables():
-    # hosted_local = maps_api_key is None
-    # if hosted_local or app.debug:
-    #     db.create_all()
-    pass
-
+    # create tables if they don't exist
+    db.create_all()
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -76,7 +81,9 @@ def newPost():
 
 @app.route('/allposts', methods=['GET'])
 def allPosts():
-    all_posts = Post.query.order_by(Post.date_posted).all()
+    # all_posts = Post.query.order_by(Post.date_posted).all()
+    all_posts = db.session.query(Post).all()
+
     print("All posts = ", *all_posts)
     return render_template('allPosts.html', posts=all_posts)
 
