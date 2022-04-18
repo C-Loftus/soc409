@@ -21,9 +21,10 @@ app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 
 @app.before_first_request
 def create_tables():
-    hosted_local = maps_api_key is None
-    if hosted_local or app.debug:
-        db.create_all()
+    # hosted_local = maps_api_key is None
+    # if hosted_local or app.debug:
+    #     db.create_all()
+    pass
 
 
 class Post(db.Model):
@@ -82,6 +83,7 @@ def allPosts():
 @app.route('/maps', methods=['GET'])
 def maps():
     all_posts = Post.query.order_by(Post.date_posted).all()
+    # db.session.query(Post).all()
     print("All posts = ", *all_posts)
     return render_template('maps.html', posts=all_posts, api=maps_api_key)
 
