@@ -31,14 +31,19 @@ h3,h4,h5, .actions{
         {% if post.location %}
             <h5> Found near {{post.location}}</h5>
         {% else %}
+
             <h5> Location not specified </h5>
         {% endif %}
-        {% if post.imageLink %}
+        {% if post.image %}
         <div>
             <br>
             <br>
-            <img src="static/assets/images/{{post.imageLink}}" class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}">
+            <!-- <img src="static/assets/images/{{post.imageLink}}" class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}"> -->
+            <img src="{{post.imageLink}}" class="float-right" style="max-width:300px; max-height:300px" alt="Picture of post {{post.id}}">
+
         </div>
+
+
         {% else %}
             <h5> No image attatched. </h5>
         {% endif %}

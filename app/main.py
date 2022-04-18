@@ -1,4 +1,5 @@
 import os, flask
+import re
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect
@@ -41,19 +42,22 @@ class Post(db.Model):
     author = db.Column(db.String(30), nullable=True, default='Anonymous')
     location = db.Column(db.String(30), nullable=True, default='No Location Given')
     
+    image=db.Column(db.LargeBinary)
+
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return 'Post ' + str(self.id)
 
 
-def commitPost(request, image_link=""):
+def commitPost(request, image):
     plant_Name =      request.form.get('plantName', False)
     post_title =      request.form.get('title', False)
     post_content =    request.form.get('description', False)
     post_author = request.form.get('author', False)
     location = request.form.get('location', False)
-    new_post = Post(title=post_title, description=post_content, plantName=plant_Name, imageLink=image_link, location=location, author=post_author)
+
+    new_post = Post(title=post_title, description=post_content, plantName=plant_Name, location=location, author=post_author, image=image)
     db.session.add(new_post)
     db.session.commit()
 
@@ -69,10 +73,10 @@ def newPost():
                     return redirect(request.url)
 
             if files.allowed_image(app, image.filename):
-                image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+                # image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
                 image_link = image.filename
 
-        commitPost(request, image_link)
+        commitPost(request, image)
         return redirect('/allposts')
     elif request.method == 'GET':
         all_posts = Post.query.order_by(Post.date_posted).all()
@@ -89,8 +93,9 @@ def allPosts():
 
 @app.route('/maps', methods=['GET'])
 def maps():
-    all_posts = Post.query.order_by(Post.date_posted).all()
-    # db.session.query(Post).all()
+    # all_posts = Post.query.order_by(Post.date_posted).all()
+    all_posts = db.session.query(Post).all()
+
     print("All posts = ", *all_posts)
     return render_template('maps.html', posts=all_posts, api=maps_api_key)
 
