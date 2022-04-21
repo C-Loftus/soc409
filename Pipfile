@@ -9,6 +9,8 @@ gunicorn = "*"
 flask-sqlalchemy = "*"
 werkzeug = "*"
 psycopg2-binary = "*"
+matplotlib = "*"
+wordcloud = "*"
 
 [dev-packages]
 
