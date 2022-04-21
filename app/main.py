@@ -1,6 +1,4 @@
-import mimetypes
 import os, flask
-from tkinter import image_names
 import re, base64
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, Response
