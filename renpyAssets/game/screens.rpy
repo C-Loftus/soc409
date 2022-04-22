@@ -395,7 +395,7 @@ style main_menu_vbox:
     xalign 1.0
     xoffset -20
     xmaximum 800
-    yalign 1.0
+    yalign 0.05
     yoffset -20
 
 style main_menu_text:
