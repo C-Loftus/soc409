@@ -8,7 +8,12 @@ h3,h4,h5, .actions{
     padding-right: 30px;
     }
     body {
-        background-image: url('static/assets/roots.jpg');
+        background-image: url('static/assets/background.png');
+      }
+      #picture {
+        height: 500px;
+        position: relative;
+        margin: 0 auto;
       }
 </style>
 {% endblock %}
@@ -17,6 +22,10 @@ h3,h4,h5, .actions{
     <div>
         <br>
         <br>
+        <br>
+        <br>
+        <br>
+
         <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
     </div>
 

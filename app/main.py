@@ -159,7 +159,7 @@ def wordCloudGenerator():
         print("No evaluations yet")
         return render_template("evaluation.html")
     wordcloud = WordCloud(width = 800, height = 500,
-                    background_color ='black',
+                    background_color="Green",
                     min_font_size = 10).generate(words)
     
     wordcloud.to_file("wordcloud.png")
