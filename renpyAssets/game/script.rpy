@@ -26,8 +26,6 @@ label start:
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
 
-    # show bean happy
-
     # These display lines of dialogue.
 
     n "{w}So.{w} You’re procrastinating again."
@@ -99,6 +97,8 @@ label post_ch1:
     n "You can see the volunteers handing out seed packets and little pots with dirt in the distance."
 
     n "There’s not too much of a line, so you get to the front fast."
+
+    show volunteer with fade
 
     n "A volunteer hands you a pot with dirt and a seed packet, which reads \“Teosinte Seeds\”."
 
@@ -235,10 +235,11 @@ label ch3_campus:
 label post_ch3:
 
     if plantingBg == "Dorm":
-        scene bg woolworth
+        scene bg dorm with fade
+        show pot
 
     if plantingBg == "Dirt":
-        scene bg dirt
+        scene bg dirt with fade
 
     n "You head to [plantingLoc] with your seed."
 
@@ -248,15 +249,22 @@ label post_ch3:
 
     n "The teosinte seeds look somewhat triangular, and they poke a bit into your skin."
 
-    n "You make a small divot into the dirt and put a seed in."
+    if plantingBg == "Dirt":
+        n "You make a small divot into the dirt and put a seed in."
+    else:
+        n "You make a small divot into the pot's dirt and put a seed in."
 
     # pop up window here
+    call screen PopUp("Now, it’s time to go plant YOUR seed!\n\nYes, you, in real life!\n\nCome back here only once you’ve planted your seed.\n\nDon’t forget to take a picture of where you’ve planted it!")
 
     p "There. My seed's all planted!"
 
     n "You take a second to admire your work."
 
-    n "It’s a strange feeling, planting something in the ground."
+    if plantingBg == "Dirt":
+        n "It’s a strange feeling, planting something in the ground."
+    else:
+        n "It’s a strange feeling, planting something."
 
     n "You feel... responsible for it."
 
@@ -266,23 +274,31 @@ label post_ch3:
 
     n "But before you have too much time to think about the promise you’ve made to your plant...{w} a little plant pops out from the dirt!"
 
-    # show teosinte
+    hide pot
+
+    show teo happy with fade
 
     n "How strange. Plants don’t usually grow that fast."
 
     p "What the..."
 
+    show teo talking
+
     t "Hey! You! Are you the one who planted me?"
 
     menu:
         "Yes":
-            jump ch3_pot
+            jump ch4_yes
         "No":
-            jump ch3_campus
+            jump ch4_no
 
 label ch4_yes:
 
+    show teo happy
+
     p "Yes, that’s me!"
+
+    show teo talking
 
     t "Wow! It’s so great to meet you."
 
@@ -294,11 +310,17 @@ label ch4_yes:
 
 label ch4_no:
 
+    show teo happy
+
     p "Uh... no. That was, um, somebody else."
+
+    show teo confused
 
     t "Oh. Really?"
 
     n "The little green thing looks confused."
+
+    show teo talking
 
     t "Well, you’re the one taking care of me, then, right?"
 
@@ -310,7 +332,11 @@ label ch4_no:
 
 label post_ch4:
 
+    show teo talking
+
     t "So what should I call you, my lovely caretaker?"
+
+    show teo happy
 
     p "My name is %(player_name)s."
 
@@ -318,9 +344,13 @@ label post_ch4:
 
     p "What... even are you?"
 
+    show teo talking
+
     t "Obviously, I’m your Teosinte plant!"
 
     t "But you can just call me Teo."
+
+    show teo happy
 
     p "It’s nice to meet you, Teo!"
 
@@ -336,15 +366,21 @@ label post_ch4:
 
     p "Is there anything else I can do for you?"
 
+    show teo talking
+
     t "You definitely should water me!"
 
     t "But more than just watering goes into caring for a plant."
 
     t "You didn’t know that?"
 
+    show teo happy
+
     p "What else does a plant even need besides water?"
 
     p "Dirt?"
+
+    show teo talking
 
     t "Dirt too!{w} But I’m talking about a less tangible sort of care."
 
@@ -371,9 +407,15 @@ label post_ch4:
 
     t "After all, we once grew free."
 
+    show teo happy
+
     p "Wow. I really had no idea."
 
+    show teo confused
+
     t "Now that I think about it, how could you?"
+
+    show teo talking
 
     t "You don’t get to grow the food you eat."
 
@@ -394,14 +436,196 @@ label post_ch4:
     t "But not a lot of people know it anymore."
 
     # another pop up
+    call screen PopUp("Now that you’ve heard Teo tell his story, write a poem for your plant!\n\nYes, you, in real life!\n\nThe poem can encourage your plant to grow big and strong or it can just tell a story about the place you are planting your Teosinte.\n\nSave your poem to share with the community!")
+
+    show teo happy
 
     p "You’re saying plants have histories?"
 
+    show teo talking
+
     t "Well, of course! Doesn’t everything?"
+
+    show teo happy
 
     p "What’s your story, then?"
 
+    show teo talking
+
+    t "Me and my sisters, beans and squash, used to live together."
+
+    t "We made such a great trio."
+
+    t "Each of us complimented each other’s weaknesses."
+
+    t "What one took from the earth the other gave back."
+
+    t "Yet, one day we were separated against our will."
+
+    t "My dear sisters, the beans and squash, were taken to their own fields away from me and the other corn."
+
+    t "We forgot our history.{w} We forgot our family."
+
+    t "Most of all, we forgot where we came from."
+
+    t "As time went on there were those who tried to sell our very genetics."
+
+    t "Who tried to separate us from our stories."
+
+    t "Despite this, there’s some like me who haven’t given up."
+
+    t "My sisters and I, we will always have a story."
+
+    t "The people who we grew alongside deserve to have rights in how they plant us."
+
+    t "After all, they are the ones that respect our stories."
+
+    t "They are the ones who remember the kind of earth we came from."
+
+    t "This is what seed sovereignty is all about."
+
+    t "It’s not only being able to live alongside my sisters, but also being able to preserve my story."
+
+    show teo happy
+
+    p "Seed... sovereignty? I’ve never even heard of that!"
+
+    show teo talking
+
+    t "I’m not surprised."
+
+    t "So few people these days have!"
+
+    t "Don’t worry, I’ll explain it a little bit for you."
+
+    t "A long time ago, we didn’t have these crazy things called corporations you humans love."
+
+    t "We just had plants."
+
+    t "There were so many different types of seeds, like angel beans, winged beans, and the butterfly pea.{w} And don’t forget the Teosinte!"
+
+    t "But these days, only three companies control about half the seeds grown on earth!"
+
+    t "Isn’t that crazy?"
+
+    menu:
+        "So crazy!":
+            jump ch5_yes
+        "Well... capitalism...":
+            jump ch5_no
+
+label ch5_yes:
+
+    show teo confused
+
+    p "That’s so crazy! Half?!"
+
+    show teo talking
+
+    t "I know. That’s way too many."
+
+    t "Actually, any more than zero is still too many for me."
+
+    t "But can you imagine? No matter how rich your history may be with a certain seed, you likely have to buy it from a company!"
+
+    t "Huge companies can buy the rights to seeds, taking them away from local farmers."
+
+    jump post_ch5
+
+label ch5_no:
+
+    show teo confused
+
+    p "Well, you know about this thing called capitalism...?"
+
+    show teo talking
+
+    t "Yes, yes, I’m aware."
+
+    t "But that doesn’t mean it’s okay to let huge companies buy the rights to seeds!"
+
+    t "It’s not okay to take away seeds from local farmers who may have rich histories with them."
+
+label post_ch5:
+
+    show teo talking
+
+    t "And that’s why seed sovereignty is so important."
+
+    t "So, to get back to your question, seed sovereignty is the right that farmers, gardeners, and other food producers have to save, use, breed, exchange, and sell open-source seeds."
+
+    show teo happy
+
+    p "Open... source... seeds?"
+
+    show teo confused
+
+    t "Oh, goodness."
+
+    show teo talking
+
+    t "They don’t teach you about open source seeds in school?"
+
+    t "I guess I can tell you a little about them too."
+
+    t "{b}{i}Open source seeds{/b}{/i} are seeds that are not genetically modified, patented, or controlled by corporations."
+
+    t "Open source seeds can be sold to other food producers, but are also often exchanged between food producers via seed swaps."
+
+    t "These seed swaps help give more people access to different seeds and help more people learn about the histories of those different seeds."
+
+    show teo happy
+
+    p "This all sounds great."
+
+    show teo talking
+
+    t "Be patient!"
+
+    t "I haven’t even gotten to potentially the most severe aspect of seed sovereignty yet!"
+
+    t "So, at least tell me you know what biodiversity is."
+
+    menu:
+        "Of course!":
+            jump ch6_yes
+        "Remind me?":
+            jump ch6_no
+
+label ch6_yes:
+
+    show teo happy
+
+    p "Of course I do! It’s the biological variety of all life on earth."
+
+    show teo talking
+
+    t "Wow! Good job."
+
+    jump post_ch6
+
+label ch6_no:
+
+    show teo confused
+
+    p "Maybe you can remind me?"
+
+    show teo talking
+
+    t "Biodiversity refers to the biological variety of all life on earth."
+
+    jump post_ch6
+
+label post_ch6:
+
+    show teo talking
+
+    t "And having {b}{i}biodiversity{/i}{/b} in our food system is important because it helps our means of producing food endure environmental disasters such as climate change, diseases affecting crops, and flood."
 
     # This ends the game.
+
+    hide teo with fade
+
+    n "This is the end of the demo. Stay tuned for the rest of the game!"
 
     return
