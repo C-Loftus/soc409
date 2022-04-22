@@ -11,6 +11,7 @@ werkzeug = "*"
 psycopg2-binary = "*"
 matplotlib = "*"
 wordcloud = "*"
+numpy = "*"
 
 [dev-packages]
 

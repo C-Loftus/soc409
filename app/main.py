@@ -158,8 +158,14 @@ def wordCloudGenerator():
     if len(words) == 0 : 
         print("No evaluations yet")
         return render_template("evaluation.html")
-    wordcloud = WordCloud(width = 800, height = 500,
+
+    import numpy as np
+    mask = np.array(Image.open('app/static/assets/images/corn.jpg'))
+    wordcloud = WordCloud(
                     background_color="Green",
+                    mask=mask, 
+                    width=mask.shape[1],
+                    height=mask.shape[0],
                     min_font_size = 10).generate(words)
     
     wordcloud.to_file("wordcloud.png")
