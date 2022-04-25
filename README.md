@@ -4,10 +4,14 @@ This repository holds all the  code for our final project for SOC/COS 409.  For 
  ## How to Use Our Website
 Our website is hosted at https://soc409project.herokuapp.com/ It is recommended to not use Chrome to view this website.  The game framework we use is currently resolving a bug on Chrome-based  browsers.
 
- To interact with our website simply click start on the game once it has loaded.  as you play you may be prompted to submit images of your plants or provide user reflections. In order to do this,  first save your game to make sure you don't lose any progress.Then, simply click on the corresponding tabs at the top of the website.  These tabs will bring you to forms where you can submit the appropriate data.
+ To interact with our website simply click start on the game once it has loaded. As you play you may be prompted to submit images of your plants or provide user reflections. In order to do this,  first save your game to make sure you don't lose any progress.Then, simply click on the corresponding tabs at the top of the website. This will bring you to https://soc409project.herokuapp.com/newpost where you can submit the appropriate data.
 
-  To view others' posts go to https://soc409project.herokuapp.com/allPosts At  this part of the website you can see other images or delete your own if you no longer wish them to be public.
 
+  When you complete the game you may want to learn more about the experience of other players.
+  To view others' posts go to https://soc409project.herokuapp.com/allposts At  this part of the website you can see other images or delete your own if you no longer wish them to be public.
+
+  Additionally, you can also geographically situate yourself using the map at https://soc409project.herokuapp.com/maps
+    At the bottom of this page it will display all the locations of the user images. You can then mark them on the map.  We do not parse any image metadata from user uploads in order to protect user privacy. Therefore, we do not automatically display picture locations on the map. This map functionality is for user convenience more than technical reasons.
 
  ## Building From Source
 
