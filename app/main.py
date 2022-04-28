@@ -4,10 +4,6 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, Response
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-from PIL import Image
-import io
 
 from .utils import files
 
@@ -69,40 +65,6 @@ def commitPost(request, image):
     db.session.add(new_post)
     db.session.commit()
 
-class Evaluation(db.Model) : 
-    id = db.Column(db.Integer, primary_key=True)
-    q1 = db.Column(db.Text, nullable=True, default=(""))
-    q2 = db.Column(db.Text, nullable=True, default=(""))
-    # q3 = db.Column(db.String(100), nullable=True, default=(""))
-    # q4 = db.Column(db.Text, nullable=True, default=(""))
-
-    # date_posted = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return 'Evaluation ' + str(self.id)
-
-def commitEvaluation(request) : 
-
-    q1 = request.form.get('q1', False)
-    q2 = request.form.get('q2', False)
-    q3 = request.form.get('q3', False)
-    # q4 = request.form.get('q4', False)
-    new_evaluation = (
-        Evaluation(q1=q1, q2=q2)
-    )
-    db.session.add(new_evaluation)
-    db.session.commit()
-
-@app.route('/evaluation', methods=['GET', 'POST'])
-def newEvaluation() : 
-    if request.method == 'POST':
-        commitEvaluation(request)
-        return redirect('/wordcloud')
-    elif request.method == 'GET':
-        print("IN GET")
-        # all_posts = Post.query.order_by(Post.date_posted).all()
-        return render_template('evaluation.html')
-
 @app.route('/newpost', methods=['GET', 'POST'])
 def newPost():
     if request.method == 'POST':
@@ -141,35 +103,9 @@ def maps():
     print("All posts = ", *all_posts)
     return render_template('maps.html', posts=all_posts, api=maps_api_key)
 
-@app.route('/wordcloud', methods=['GET'])
-def wordCloudGenerator():
-    # all_evals = db.session.query(Evaluation).all()
-    # for eval in all_evals : 
-    #     id = eval.id
-    #     to_delete = Evaluation.query.get_or_404(id)
-    #     db.session.delete(to_delete)
-    # db.session.commit()
-    all_evals = db.session.query(Evaluation).all()
-    words = []
-    for eval in all_evals : 
-        words += eval.q1.split(" ")
-        words += eval.q2.split(" ")
-    words = " ".join(words)
-    if len(words) == 0 : 
-        print("No evaluations yet")
-        return render_template("evaluation.html")
-    wordcloud = WordCloud(width = 800, height = 500,
-                    background_color="Green",
-                    min_font_size = 10).generate(words)
-    
-    wordcloud.to_file("wordcloud.png")
-
-    im = Image.open("wordcloud.png")
-    data = io.BytesIO()
-    im.save(data, "JPEG")
-    encoded_img_data = base64.b64encode(data.getvalue())
-
-    return render_template("wordcloud.html", img_data=encoded_img_data.decode('utf-8'))
+@app.route('/timeline', methods=['GET'])
+def timeline():
+    return render_template("timeline.html")
 
 @app.route("/")
 def index():
