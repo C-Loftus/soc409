@@ -14,9 +14,11 @@ default plantingExp = None
 
 # The game starts here.
 
+init:
+    $ import time
+
 label start:
-    play music "illurock.opus"
-    
+
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
@@ -248,6 +250,11 @@ label post_ch3:
 
     n "Unsure if you’re excited because you get to avoid the library or because you get to plant, you open the seed packet."
 
+    if plantingBg == "Dorm":
+        hide pot
+
+    show teosinte seed
+
     n "The teosinte seeds look somewhat triangular, and they poke a bit into your skin."
 
     if plantingBg == "Dirt":
@@ -257,6 +264,13 @@ label post_ch3:
 
     # pop up window here
     call screen PopUp("Now, it’s time to go plant YOUR seed!\n\nYes, you, in real life!\n\nCome back here only once you’ve planted your seed.\n\nDon’t forget to take a picture of where you’ve planted it!")
+
+    $ year, month, day, hour, minute, second, dow, doy, dst = time.localtime()
+
+    hide teosinte seed
+
+    if plantingBg == "Dorm":
+        show pot
 
     p "There. My seed's all planted!"
 
@@ -451,7 +465,11 @@ label post_ch4:
 
     p "What’s your story, then?"
 
-    show teo talking
+    t "Well..."
+
+    hide teo talking
+
+    show bg organic farm with fade
 
     t "Me and my sisters, beans and squash, used to live together."
 
@@ -463,6 +481,8 @@ label post_ch4:
 
     t "Yet, one day we were separated against our will."
 
+    show bg industrial farm with fade
+
     t "My dear sisters, the beans and squash, were taken to their own fields away from me and the other corn."
 
     t "We forgot our history.{w} We forgot our family."
@@ -472,6 +492,14 @@ label post_ch4:
     t "As time went on there were those who tried to sell our very genetics."
 
     t "Who tried to separate us from our stories."
+
+    if plantingBg == "Dorm":
+        scene bg dorm with fade
+
+    if plantingBg == "Dirt":
+        scene bg dirt with fade
+
+    show teo talking
 
     t "Despite this, there’s some like me who haven’t given up."
 
@@ -623,10 +651,354 @@ label post_ch6:
 
     t "And having {b}{i}biodiversity{/i}{/b} in our food system is important because it helps our means of producing food endure environmental disasters such as climate change, diseases affecting crops, and flood."
 
-    # This ends the game.
+    t "Without seed sovereignty, it will get harder and harder to maintain biodiversity!"
+
+    t "And that means, without seed sovereignty, this world will have a harder and harder time fighting climate change, as the earth won’t have the usual ecosystems used to regulate harmful pollutants and dangerous levels of carbon."
+
+    t "I know that might sound bleak, but there’s a lot of ways to support seed sovereignty and avoid this scary future!"
+
+    show teo happy
+
+    p "I’m interested!"
+
+    show teo talking
+
+    t "Well, we can start by reclaiming seed farming as a local practice."
+
+    t "You may not know this, but my corn ancestors like other Teosinte and maize were from places like Mexico, Guatemala, Honduras, and Nicaragua."
+
+    t "They were grown by indigenous people who took care to pass down their stories."
+
+    t "But now, so many of them are just owned by companies."
+
+    t "Their histories have been stolen and replaced by corporations who want to control seeds..."
+
+    t "And instead of preserving their stories, they want to profit off of them."
+
+    t "These days, indigenous people are leading the seed sovereignty movement, {w}and the movement is growing as we speak!"
+
+    show teo tired
+
+    p "Well, tell me how to help more! Or how to join in!"
+
+    t "I’m so tired after explaining all of that to you already."
+
+    t "Don’t you want me to grow into a beautiful plant?"
+
+    menu:
+        "I suppose I do...":
+            jump ch7_yes
+        "Well, where else can I find information?":
+            jump ch7_where
+
+label ch7_yes:
+
+    p "I suppose I do."
+
+    show teo happy
+
+    p "But before you go, can you point me in the right direction?"
+
+    show teo talking
+
+    t "That, I can!"
+
+    jump post_ch7
+
+label ch7_where:
+
+    p "Well, I want to help. Where else can I find information?"
+
+    show teo happy
+
+    jump post_ch7
+
+label post_ch7:
+
+    show teo talking
+
+    t "First, what’s the way you most want to help?"
+
+    menu:
+        "I like gardening.":
+            jump ch8_garden
+        "I want to volunteer.":
+            jump ch8_volunteer
+        "I want to donate money.":
+            jump ch8_donate
+
+label ch8_garden:
+
+    show teo happy
+
+    p "I think I really like the gardening aspect of this."
+
+    p "How can I keep gardening and also support seed sovereignty?"
+
+    show teo talking
+
+    t "I know some great places you can buy seeds that support seed sovereignty efforts!"
+
+    t "You can buy seeds from an organization like Alliance of Native Seedkeepers, a Native American owned seed company that sells non-GMO seeds in line with their commitment to agricultural biodiversity."
+
+    t "Or, visit the Gaia Foundation’s Seed Saving Resouces page to learn how to produce and save your own seeds!"
+
+    jump post_ch8
+
+label ch8_volunteer:
+
+    show teo happy
+
+    p "I think I’d like to volunteer my time with organizations that work to support seed sovereignty."
+
+    show teo talking
+
+    t "That’s a great idea."
+
+    t "If volunteering on a farm interests you, check out the Utopian Seed Project, an organization that supports diversity in food and farming."
+
+    t "Or if you like organizing for change, try Navdanya International, an organization fighting for seed sovereigntiny for small farmers globally."
+
+    t "If there are no organizations in your area, perhaps you could donate to one!"
+
+    show teo happy
+
+    menu:
+        "Tell me where to donate.":
+            jump ch8_2_donate
+        "I would rather not donate.":
+            jump ch8_2_no
+
+label ch8_2_donate:
+
+    p "Where can I donate?"
+
+    show teo talking
+
+    t "I’m so glad you asked!"
+
+    t "Some great places to donate your money to for seed sovereignty are the Utopian Seed Project, an organization that supports diversity in food and farming..."
+
+    t "Or the Native American Food Sovereignty Alliance, an national organization dedicated to helping indigineous groups take control of their food systems."
+
+    jump post_ch8
+
+label ch8_2_no:
+
+    p "I’m not sure I have the funds right now to donate."
+
+    show teo talking
+
+    t "That’s completely okay!"
+
+    t "It’s great that you were able to just listen and talk with me today in the first place."
+
+    jump post_ch8
+
+label ch8_donate:
+
+    show teo happy
+
+    p "I’m pretty busy, but I’d like to donate some money towards seed sovereignty."
+
+    show teo talking
+
+    t "That is completely understandable, and I’m happy you still want to help despite being busy!"
+
+    t "Some great places to donate your money to for seed sovereignty are the Utopian Seed Project, an organization that supports diversity in food and farming..."
+
+    t "Or the Native American Food Sovereignty Alliance, an national organization dedicated to helping indigineous groups take control of their food systems."
+
+    jump post_ch8
+
+label post_ch8:
+
+    show teo happy
+
+    p "Thanks for explaining all of this to me today, Teo."
+
+    p "And for pointing me in the right direction on how to best support seed sovereignty!"
+
+    show teo talking
+
+    t "You’re welcome!"
+
+    t "I’m going to get back in the dirt to spend some time growing now."
+
+    t "But I’d love to hear how you might help support seed sovereignty, even if it’s just telling one other person about it!"
 
     hide teo with fade
 
-    n "This is the end of the demo. Stay tuned for the rest of the game!"
+    if plantingBg == "Dorm":
+        show pot
+
+    n "Teo dives back into the dirt where he came from, before you can even say goodbye."
+
+    p "Aww. I miss him already."
+
+    n "But you think you’ll likely see him again soon if you take good care of your plant."
+
+    n "For now... it’s time to head to the library."
+
+    call screen PopUp("Teo’s given you some personalized ways to support seed sovereignty efforts.\n\nAnd he wants you, in real life, to write him a letter!\n\nTell Teo about how you want to help out, even if it’s just one thing.\n\nYou could teach a friend about seed sovereignty, plant another seed, or donate five dollars.\n\nSave your letter to share with the community!\n\nAnd don’t forget to visit the resources page for more information on organizations working towards seed sovereignty!")
+
+    n "Thank you for playing!"
+
+    n "Please feel free to upload the photograph of your plant, the poem you wrote, and your letter on this website under the \“New Post\” page."
+
+    n "And look at others’ posts on the \“All Posts\” page."
+
+    n "Additionally, check out where other players have planted their seeds on the \“Maps\” page."
+
+    n "We also have a page where you can look at a \“Timeline\” of how your plant will grow, along with some reflective questions."
+
+    n "Finally, please take a look at the \“Resources\” page to see where you might be interested in supporting seed sovereignty efforts in the future."
+
+    n "We hope you learned something from Teo."
+
+    n "Save your game, and come back to this save in one month from [month]-[day]-[year], and you can hear one more thing from Teo."
+
+    $ year2, month2, day2, hour2, minute2, second2, dow2, doy2, dst2 = time.localtime()
+
+    if month == 12:
+        if year2 - year > 1:
+            jump after_one_month
+        elif year2 > year:
+            if month2 == 1:
+                if day2 >= day:
+                    jump after_one_month
+            else:
+                jump after_one_month
+        else:
+            jump before_one_month
+    else:
+        if year2 > year:
+            jump after_one_month
+        elif month2 - month > 1:
+            jump after_one_month
+        elif month2 - month == 1:
+            if day2 >= day:
+                jump after_one_month
+        else:
+            jump before_one_month
+
+label before_one_month:
+
+    n "Come back to this save in one month from [month]-[day]-[year], and you can hear one more thing from Teo."
+
+    $ year2, month2, day2, hour2, minute2, second2, dow2, doy2, dst2 = time.localtime()
+
+    n "It is currently [month2]-[day2]-[year2]. Please be patient! Plants take a while to grow."
+
+    if month == 12:
+        if year2 - year > 1:
+            jump after_one_month
+        elif year2 > year:
+            if month2 == 1:
+                if day2 >= day:
+                    jump after_one_month
+            else:
+                jump after_one_month
+        else:
+            jump before_one_month
+    else:
+        if year2 > year:
+            jump after_one_month
+        elif month2 - month > 1:
+            jump after_one_month
+        elif month2 - month == 1:
+            if day2 >= day:
+                jump after_one_month
+        else:
+            jump before_one_month
+
+label after_one_month:
+
+    if plantingBg == "Dorm":
+        scene bg dorm with fade
+        show pot
+
+    if plantingBg == "Dirt":
+        scene bg dirt with fade
+
+    n "Welcome back. Let's check in on Teo, shall we?"
+
+    if plantingBg == "Dorm":
+        hide pot
+
+    show teo talking with fade
+
+    t "Hey! Welcome back. Thanks for taking care of me all this time."
+
+    t "I hope you’ve been doing well. Have you had any time to support seed sovereignty efforts since I’ve last seen you?"
+
+    menu:
+        "Yes":
+            jump ch9_yes
+        "No":
+            jump ch9_no
+
+label ch9_yes:
+
+    show teo happy
+
+    p "I actually have!"
+
+    show teo talking
+
+    t "Wow! Really? What have you been up to?"
+
+    show teo happy
+
+    $ useless = renpy.input("What have you been up to, briefly?")
+
+    show teo talking
+
+    t "That sounds great!"
+
+    jump post_ch9
+
+label ch9_no:
+
+    show teo happy
+
+    p "Sorry, I haven’t. I’ve been really busy."
+
+    show teo talking
+
+    t "That’s okay! I’m glad you’re still thinking about me and seed sovereignty though!"
+
+    jump post_ch9
+
+label post_ch9:
+
+    t "Anyways, I don’t have too much to say today. I’m just happy to see you again."
+
+    t "And I’m happy that seeds are still on your mind."
+
+    t "We’re very important, after all!"
+
+    t "Thanks for planting me. And thanks for listening to me, too."
+
+    hide teo with fade
+
+    if plantingBg == "Dorm":
+        show pot
+
+    n "Teo goes back into the dirt."
+
+    n "Thanks for participating in this journey with Teo and us."
+
+    n "Again, we encourage you to upload photographs of anything you plant on the \“New Post\” page, and to look at others’ posts on the \“All Posts\” page."
+
+    n "Additionally, we encourage you to check out where other players have planted their seeds on the \“Maps\” page."
+
+    n "Don’t forget to look at the \“Timeline\” of how your plant will grow, which also has some reflective questions for you to ponder."
+
+    n "Finally, please take a look at the \“Resources\” page to learn about opportunities to support seed sovereignty efforts in the future."
+
+    n "We hope you learned something from Teo."
+
+    n "Thank you for taking the time to learn about seed sovereignty with us."
 
     return
