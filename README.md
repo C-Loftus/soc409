@@ -13,6 +13,17 @@ Our website is hosted at https://soc409project.herokuapp.com/ It is recommended 
   Additionally, you can also geographically situate yourself using the map at https://soc409project.herokuapp.com/maps
     At the bottom of this page it will display all the locations of the user images. You can then mark them on the map.  We do not parse any image metadata from user uploads in order to protect user privacy. Therefore, we do not automatically display picture locations on the map. This map functionality is for user convenience more than technical reasons.
 
+## Technical Infrastructure
+There were four main technical components to our project.
+ #### Ren'Py
+ Ren'py is a visual novel engine that we used to create our story. Documentation for the engine can be found can be found [here](https://www.renpy.org/doc/html/). Ren'py  uses user scripts in order to create narrative driven  stories. All assets and files for our game can be found in `renpyAssets`
+ #### Heroku
+ Heroku  is a website hosting service that allows us to host not only HTML but also our backend code and database. We use Heroku's Postgresql  database as our way of storing user submitted content.
+ #### Flask
+ Flask is a backend framework that we used to read from our database  and display  the user submitted content to others.
+
+#### Timeline JS
+Timeline JS  is the tool we used to build the timeline on our website.  This tool takes a CSV file and parses it with images into a timeline that can be exported to a webpage. Documentation and more info can be found at https://timeline.knightlab.com
  ## Building From Source
 
 This entire folder should be the projects directory for renpy. The folder titled `renpyAssets` is where is the game itself is located that we edit.
@@ -24,7 +35,7 @@ and configure file associations for .rpy to renpy.
  Once this folder is loaded into Renpy,  you can compile it  into the format that can be used for web hosting.
 
 ### Editing
-Script root should be in `renpyAssets/game/script.rpy`. From there you can link to other scripts
+Script root should be in `renpyAssets/game/script.rpy`. From there you can link to other scripts.  
 
 ### Deploying 
 ```
