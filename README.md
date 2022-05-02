@@ -13,6 +13,7 @@ Our website is hosted at https://soc409project.herokuapp.com/ It is recommended 
   Additionally, you can also geographically situate yourself using the map at https://soc409project.herokuapp.com/maps
     At the bottom of this page it will display all the locations of the user images. You can then mark them on the map.  We do not parse any image metadata from user uploads in order to protect user privacy. Therefore, we do not automatically display picture locations on the map. This map functionality is for user convenience more than technical reasons.
 
+During the planting experience we recommend users consult https://soc409project.herokuapp.com/timeline  This timeline will show the entire growth process of the Teosinte plant we recommend the user to plant.  However even if they don't have a Teosinte seed,  this timeline is still useful for contextualizing the history of  an ancient plant and providing reflection questions along the growth process.
 ## Technical Infrastructure
 There were four main technical components to our project.
  #### Ren'Py
