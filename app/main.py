@@ -107,6 +107,10 @@ def maps():
 def timeline():
     return render_template("timeline.html")
 
+@app.route('/resources', methods=['GET'])
+def resources():
+    return render_template("resources.html")
+
 @app.route("/")
 def index():
     return flask.render_template('index.html')
